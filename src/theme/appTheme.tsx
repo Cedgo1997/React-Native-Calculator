@@ -20,17 +20,10 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: 'right',
     },
-    button: {
-        height: 80,
-        width: 80,
-        backgroundColor: '#333333',
-        borderRadius: 100,
+    row: {
+        flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        marginBottom: 18,
+        paddingHorizontal: 10
     },
-    buttonText: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: '300'
-    }
 });
