@@ -4,17 +4,14 @@ import { StyleSheet, Text, View } from 'react-native';
 interface Props {
     text: string;
     color?: string;
+    isBig: boolean;
 }
 
-export const CalcButton = ({ text, color = 'default' }: Props) => {
+export const CalcButton = ({ text, color = '#2D2D2D', isBig = false }: Props) => {
 
     return (
-        <View style={
-            color === 'default'
-                ? styles.button
-                : { ...styles.button, ...styles[color] }
-        }>
-            <Text style={styles.buttonText}>{text}</Text>
+        <View style={{ ...styles.button, backgroundColor: color, width: (isBig ? 170 : 80) }}>
+            <Text style={{...styles.buttonText, color: (color === '#9B9B9B') ? 'black' : 'white' }}>{text}</Text>
         </View >
     )
 }
@@ -28,13 +25,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 4,
         backgroundColor: '#2D2D2D',
-    },
-    lightGrey: {
-        backgroundColor: '#9B9B9B',
-        color: 'black'
-    },
-    orange: {
-        backgroundColor: '#FF9427',
     },
     buttonText: {
         color: 'white',
