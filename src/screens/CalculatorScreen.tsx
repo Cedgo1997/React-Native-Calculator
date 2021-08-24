@@ -1,40 +1,79 @@
-import React from 'react'
+/* eslint-disable prettier/prettier */
+import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import { CalcButton } from '../components/CalcButton'
 import { styles } from '../theme/appTheme'
 
 export const CalculatorScreen = () => {
+
+    const [total, setTotal] = useState('100');
+    const [subTotal, setSubTotal] = useState('100');
+
+    const clear = () => {
+        setTotal('0');
+        setSubTotal('0');
+    };
+
+    const buildNumber = (textNumber: string) => {
+
+        total === '0'
+            ? textNumber === '.'
+                ? setTotal(total + textNumber)
+                : setTotal(textNumber)
+            : total.includes('.')
+                ? textNumber === '.'
+                    ? false
+                    : setTotal(total + textNumber)
+                : setTotal(total + textNumber);
+    };
+
+    const changeSign = () => {
+        total !== '0' && (total.includes('-') ? setTotal(total.replace('-', '')) : setTotal('-' + total));
+    };
+
+    const deleteNum = () => {
+        if (total.length > 1 && total !== '0') {
+            if (total.length === 2 && total.includes('-')) {
+                setTotal('0');
+            } else {
+                setTotal(total.slice(0, -1));
+            }
+        } else {
+            setTotal('0');
+        }
+    };
+
     return (
         <View style={styles.calculatorContainer}>
-            <Text style={styles.tinyResult}>1,500.00</Text>
-            <Text style={styles.result}>1,500.00</Text>
+            <Text style={styles.tinyResult}>{total !== '0' && subTotal}</Text>
+            <Text style={styles.result} numberOfLines={1} adjustsFontSizeToFit>{total}</Text>
             <View style={styles.row}>
-                <CalcButton text='C' color='#9B9B9B' />
-                <CalcButton text='+/-' color='#9B9B9B' />
-                <CalcButton text='%' color='#9B9B9B' />
+                <CalcButton text='C' color='#9B9B9B' action={clear} />
+                <CalcButton text='+/-' color='#9B9B9B' action={changeSign} />
+                <CalcButton text='del' color='#9B9B9B' action={deleteNum} />
                 <CalcButton text='/' color='#FF9427' />
             </View>
             <View style={styles.row}>
-                <CalcButton text='7' />
-                <CalcButton text='8' />
-                <CalcButton text='9' />
+                <CalcButton text='7' action={buildNumber} />
+                <CalcButton text='8' action={buildNumber} />
+                <CalcButton text='9' action={buildNumber} />
                 <CalcButton text='X' color='#FF9427' />
             </View>
             <View style={styles.row}>
-                <CalcButton text='4' />
-                <CalcButton text='5' />
-                <CalcButton text='6' />
+                <CalcButton text='4' action={buildNumber} />
+                <CalcButton text='5' action={buildNumber} />
+                <CalcButton text='6' action={buildNumber} />
                 <CalcButton text='-' color='#FF9427' />
             </View>
             <View style={styles.row}>
-                <CalcButton text='1' />
-                <CalcButton text='2' />
-                <CalcButton text='3' />
+                <CalcButton text='1' action={buildNumber} />
+                <CalcButton text='2' action={buildNumber} />
+                <CalcButton text='3' action={buildNumber} />
                 <CalcButton text='+' color='#FF9427' />
             </View>
             <View style={styles.row}>
-                <CalcButton text='0' isBig />
-                <CalcButton text='.' />
+                <CalcButton text='0' isBig action={buildNumber} />
+                <CalcButton text='.' action={buildNumber} />
                 <CalcButton text='=' color='#FF9427' />
             </View>
         </View>

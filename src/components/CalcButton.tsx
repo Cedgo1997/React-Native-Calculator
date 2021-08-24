@@ -1,16 +1,18 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Props {
     text: string;
     color?: string;
-    isBig: boolean;
+    isBig?: boolean;
+    action?: Function;
 }
 
-export const CalcButton = ({ text, color = '#2D2D2D', isBig = false }: Props) => {
+export const CalcButton = ({ text, color = '#2D2D2D', isBig = false, action }: Props) => {
 
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => action(text)}>
             <View style={{ ...styles.button, backgroundColor: color, width: (isBig ? 170 : 80) }}>
                 <Text style={{ ...styles.buttonText, color: (color === '#9B9B9B') ? 'black' : 'white' }}>{text}</Text>
             </View >
