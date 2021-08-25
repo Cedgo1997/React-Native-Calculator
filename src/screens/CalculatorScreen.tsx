@@ -75,6 +75,28 @@ export const CalculatorScreen = () => {
         lastOperation.current = Operators.sum;
     };
 
+    const calculate = () => {
+        const num1 = Number(total);
+        const num2 = Number(subTotal);
+        switch (lastOperation.current) {
+            case Operators.sum:
+                setTotal(`${num1 + num2}`);
+                break;
+            case Operators.rest:
+                setTotal(`${-(num1 - num2)}`);
+                break;
+            case Operators.multiply:
+                setTotal(`${num1 * num2}`);
+                break;
+            case Operators.divide:
+                setTotal(`${num2 / num1}`);
+                break;
+            default:
+                break;
+        }
+        setSubTotal('0');
+    };
+
     return (
         <View style={styles.calculatorContainer}>
             <Text style={styles.tinyResult}>{!(subTotal === '0' && total === '0') && subTotal}</Text>
@@ -106,7 +128,7 @@ export const CalculatorScreen = () => {
             <View style={styles.row}>
                 <CalcButton text='0' isBig action={buildNumber} />
                 <CalcButton text='.' action={buildNumber} />
-                <CalcButton text='=' color='#FF9427' />
+                <CalcButton text='=' color='#FF9427' action={calculate} />
             </View>
         </View>
     )
